@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewBag.Title = "ProductTable";
+}
+<div>
+    <form method="post">
+        <input name="Search" id="searchTxt" />
+        <button type="button" id="searchBtn">Search</button>
+    </form>
+    <button>New</button>
+</div>
+
+    <table class="table table-bordered table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Product product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td></td>
+                    <td>@product.Price</td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+<script>
+    $('#searchBtn').click(function () {
+        var searchValue = $('#searchTxt').val();
+        $.ajax({
+            url: '/Product/ProductTable',
+            data: { search: searchValue }
+        }
+        ).done(function (response) {
+            $('#tableContainer').html(response);
+        }
+        ).fail(function () {
+            alert('fail');
+        });
+    });
+</script>
