@@ -7,10 +7,10 @@
         <input name="Search" id="searchTxt" />
         <button type="button" id="searchBtn">Search</button>
     </form>
-    <button>New</button>
+    <button id="newBtn">New</button>
 </div>
 
-    <table class="table table-bordered table-bordered table-condensed">
+    <table>
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -44,6 +44,18 @@
         }
         ).done(function (response) {
             $('#tableContainer').html(response);
+        }
+        ).fail(function () {
+            alert('fail');
+        });
+    });
+    $('#newBtn').click(function () {
+        var searchValue = $('#searchTxt').val();
+        $.ajax({
+            url: '/Product/Create',
+        }
+        ).done(function (response) {
+            $('#actionContainer').html(response);
         }
         ).fail(function () {
             alert('fail');
