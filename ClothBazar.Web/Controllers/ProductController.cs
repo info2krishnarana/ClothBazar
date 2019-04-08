@@ -38,5 +38,26 @@ namespace ClothBazar.Web.Controllers
             productService.SaveProduct(product);
             return RedirectToAction("ProductTable");
         }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Product product = productService.GetProduct(id);
+            return PartialView(product);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Product product)
+        {
+            productService.UpdateProduct(product);
+            return RedirectToAction("ProductTable");
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            productService.DeleteProduct(id);
+            return RedirectToAction("ProductTable");
+        }
     }
 }

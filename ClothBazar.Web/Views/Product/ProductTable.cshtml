@@ -27,8 +27,8 @@
                     <td></td>
                     <td>@product.Price</td>
                     <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button class="editBtn" data-id="@product.Id">Edit</button>
+                        <button class="deleteBtn" data-id="@product.Id">Delete</button>
                     </td>
                 </tr>
             }
@@ -55,6 +55,17 @@
             url: '/Product/Create',
         }
         ).done(function (response) {
+            $('#actionContainer').html(response);
+        }
+        ).fail(function () {
+            alert('fail');
+        });
+    });
+    $('.editBtn').click(function () {
+        $.ajax({
+            url: '/Product/Edit',
+            data: { id: $(this).attr('data-id') }
+        }).done(function (response) {
             $('#actionContainer').html(response);
         }
         ).fail(function () {
