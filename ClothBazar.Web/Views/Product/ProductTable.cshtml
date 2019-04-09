@@ -72,4 +72,19 @@
             alert('fail');
         });
     });
+    $('.deleteBtn').click(function () {
+        var confirmDelete = confirm("Are you sure want to delete?");
+        if (confirmDelete) {
+            $.ajax({
+                url: '/Product/Delete',
+                data: { id: $(this).attr('data-id') },
+                type:'post'
+            }).done(function (response) {
+                $('#tableContainer').html(response);
+            }
+            ).fail(function () {
+                alert('fail');
+            });
+        }
+    });
 </script>
