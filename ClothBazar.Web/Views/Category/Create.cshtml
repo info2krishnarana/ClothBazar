@@ -11,5 +11,33 @@
     <label>Description</label>
     <input name="Description" />
     <br />
+    <input type="file" id="imgUpload" name="Image" accept=".png, .jpg" />
     <button type="submit">Submit</button>
 </form>
+<script>
+    $(document).ready(function () {
+        $('#imgUpload').change(function () {
+            debugger;
+            var element = this;
+            var formData = new FormData();
+            var totalFiles = element.files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = element.files[i];
+                formData.append("Photo", file);
+            }
+            $.ajax({
+                type: 'post',
+                url: '/Shared/UploadImage',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false
+            }).done(function (response) {
+                debugger;
+                console.log(response);
+            }).fail(function (XmlHttpRequest, textStatus, errorThrown) {
+                alert('fail');
+            });
+        });
+    });
+</script>
