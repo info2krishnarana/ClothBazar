@@ -11,7 +11,11 @@
     <label>Description</label>
     <input name="Description" />
     <br />
+    <label>Image</label>
+    <input  id="ImageUrl" name="ImageUrl" type="hidden" />
     <input type="file" id="imgUpload" name="Image" accept=".png, .jpg" />
+    <img id="imgCategoryImage" />
+    <br />
     <button type="submit">Submit</button>
 </form>
 <script>
@@ -34,6 +38,10 @@
                 processData: false
             }).done(function (response) {
                 debugger;
+                if (response.Success) {
+                    $('#imgCategoryImage').attr('src', response.ImageUrl);
+                    $('#ImageUrl').val(response.ImageUrl);
+                }
                 console.log(response);
             }).fail(function (XmlHttpRequest, textStatus, errorThrown) {
                 alert('fail');

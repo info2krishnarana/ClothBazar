@@ -16,10 +16,10 @@ namespace ClothBazar.Web.Controllers
             try
             {
                 var file = Request.Files[0];
-                var fileName = file.FileName;
+                var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
                 var path = Path.Combine(Server.MapPath("~/content/images/"),fileName);
                 file.SaveAs(path);
-                jsonResult.Data = new {Success=true, ImageUrl=path };
+                jsonResult.Data = new { Success = true, ImageUrl = string.Format("/content/images/{0}", fileName) };
             }
             catch (Exception ex)
             {
