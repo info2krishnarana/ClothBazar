@@ -1,20 +1,32 @@
-﻿
+﻿@model IEnumerable<Category>
 @{
     ViewBag.Title = "Create";
 }
 
 <h2>Create Product</h2>
 <form method="post" id="createProduct">
-    <label>Name</label>
-    <input name="Name" />
-    <br />
-    <label>Description</label>
-    <input name="Description" />
-    <br />
-    <label>Price</label>
-    <input name="Price" />
-    <br />
-    <button type="button" id="saveBtn">Submit</button>
+    <div class="form-group">
+        <label>Category</label>
+        <select name="CategoryID" class="form-control">
+            @foreach (Category category in Model)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input name="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <input name="Description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <input name="Price" class="form-control" />
+    </div>
+    <button type="button" id="saveBtn" class="btn btn-primary">Submit</button>
 </form>
 <script>
     $('#saveBtn').click(function () {
@@ -22,7 +34,7 @@
         $.ajax({
             url: '/Product/Create',
             data: $('#createProduct').serialize(),
-            type:'post'
+            type: 'post'
         }
         ).done(function (response) {
             $('#tableContainer').html(response);

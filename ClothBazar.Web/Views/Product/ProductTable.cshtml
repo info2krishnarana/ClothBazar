@@ -10,7 +10,7 @@
     <button id="newBtn">New</button>
 </div>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -24,7 +24,16 @@
             {
                 <tr>
                     <td>@product.Name</td>
-                    <td></td>
+                    <td>
+                        @if (product.Category != null)
+                        {
+                           <text> @product.Category.Name</text>
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
                     <td>@product.Price</td>
                     <td>
                         <button class="editBtn" data-id="@product.Id">Edit</button>
