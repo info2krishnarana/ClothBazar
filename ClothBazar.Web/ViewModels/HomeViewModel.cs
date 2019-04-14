@@ -8,7 +8,7 @@ namespace ClothBazar.Web.ViewModels
 {
     public class HomeViewModel
     {
-        public List<Category> Categoryies { get; set; }
-        public List<Product> Products { get; set; }
+        public List<Category> FeaturedCategoryies { get; set; }
+        public List<Product> FeaturedProducts { get; set; }
     }
 }

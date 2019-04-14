@@ -18,6 +18,13 @@ namespace ClothBazar.Services
               return  context.Categories.ToList();
             }
         }
+        public List<Category> GetFeaturedCategories()
+        {
+            using (CBContext context = new CBContext())
+            {
+                return context.Categories.Where(f => f.IsFeatured && f.ImageUrl != null).ToList();
+            }
+        }
 
         public void SaveCategory(Category category)
         {

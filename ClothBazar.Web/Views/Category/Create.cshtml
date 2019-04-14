@@ -12,9 +12,13 @@
     <input name="Description" />
     <br />
     <label>Image</label>
-    <input  id="ImageUrl" name="ImageUrl" type="hidden" />
+    <input id="ImageUrl" name="ImageUrl" type="hidden" />
     <input type="file" id="imgUpload" name="Image" accept=".png, .jpg" />
     <img id="imgCategoryImage" />
+    <br />
+    <label>Is Featured?</label>
+    <input name="IsFeatured" type="radio" value="true" /> True
+    <input name="IsFeatured" type="radio" value="false" checked /> False
     <br />
     <button type="submit">Submit</button>
 </form>
