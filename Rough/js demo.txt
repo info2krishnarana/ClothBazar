@@ -1,0 +1,5 @@
+function focusAction(){
+	$('html, body').animate({
+	scrollTop:$('#actionContainer').offset().top-100
+	},1000);
+}

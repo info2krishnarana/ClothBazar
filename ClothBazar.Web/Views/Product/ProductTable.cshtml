@@ -10,39 +10,40 @@
     <button id="newBtn">New</button>
 </div>
 
-    <table class="table table-striped">
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product product in Model)
+        {
             <tr>
-                <th>Product Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Action</th>
+                <td>@product.Name</td>
+                <td>
+                    @if (product.Category != null)
+                    {
+                        <text> @product.Category.Name</text>
+                    }
+                    else
+                    {
+                        <text>-</text>
+                    }
+                </td>
+                <td>@product.Price</td>
+                <td>
+                    <button class="editBtn" data-id="@product.Id">Edit</button>
+                    <button class="deleteBtn" data-id="@product.Id">Delete</button>
+                    <button class="addToCart" data-id="@product.Id">Add to cart</button>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (Product product in Model)
-            {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>
-                        @if (product.Category != null)
-                        {
-                           <text> @product.Category.Name</text>
-                        }
-                        else
-                        {
-                            <text>-</text>
-                        }
-                    </td>
-                    <td>@product.Price</td>
-                    <td>
-                        <button class="editBtn" data-id="@product.Id">Edit</button>
-                        <button class="deleteBtn" data-id="@product.Id">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
 <script>
     $('#searchBtn').click(function () {
@@ -82,18 +83,53 @@
         });
     });
     $('.deleteBtn').click(function () {
-        var confirmDelete = confirm("Are you sure want to delete?");
-        if (confirmDelete) {
-            $.ajax({
-                url: '/Product/Delete',
-                data: { id: $(this).attr('data-id') },
-                type:'post'
-            }).done(function (response) {
-                $('#tableContainer').html(response);
-            }
-            ).fail(function () {
-                alert('fail');
+        swal({
+            title: "Confirm",
+            text: "Are you sure want to delete?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '/Product/Delete',
+                        data: { id: $(this).attr('data-id') },
+                        type: 'post'
+                    }).done(function (response) {
+                        $('#tableContainer').html(response);
+                        swal("Record deleted successfully!", {
+                            icon: "success",
+                        });
+                    });
+                    //).fail(function () {
+                    //    alert('fail');
+                    //});
+                   
+                }
+                //else {
+                //    swal("Your imaginary file is safe!");
+                //}
             });
-        }
+        //var confirmDelete = confirm("Are you sure want to delete?");
+        //if (confirmDelete) {
+        //    $.ajax({
+        //        url: '/Product/Delete',
+        //        data: { id: $(this).attr('data-id') },
+        //        type:'post'
+        //    }).done(function (response) {
+        //        $('#tableContainer').html(response);
+        //    }
+        //    ).fail(function () {
+        //        alert('fail');
+        //    });
+        //}
+    });
+    var products = [];
+    $('.addToCart').click(function () {
+        var productId = $(this).attr('data-id');
+        products.push(productId);
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+        alert('Product added to cart');
     });
 </script>
