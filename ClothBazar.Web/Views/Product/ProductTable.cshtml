@@ -49,7 +49,7 @@
     $('#searchBtn').click(function () {
         var searchValue = $('#searchTxt').val();
         $.ajax({
-            url: '/Product/ProductTable',
+            url: '@Url.Action("ProductTable", "Product")', //'/Product/ProductTable',
             data: { search: searchValue }
         }
         ).done(function (response) {
