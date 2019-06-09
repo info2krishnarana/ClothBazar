@@ -11,7 +11,7 @@ namespace ClothBazar.Web.Controllers
 {
     public class ProductController : Controller
     {
-        ProductService productService = new ProductService();
+        //ProductService productService = new ProductService();
         CategoriesService categoriesService = new CategoriesService();
         public ActionResult Index()
         {
@@ -20,10 +20,10 @@ namespace ClothBazar.Web.Controllers
 
         public ActionResult ProductTable(string search)
         {
-            List<Product> products = productService.GetProducts();
+            List<Product> products = ProductService.Instance.GetProducts();
             if (!string.IsNullOrEmpty(search))
             {
-                products = productService.GetProducts().Where(sr => sr.Name == search).ToList();
+                products = ProductService.Instance.GetProducts().Where(sr => sr.Name == search).ToList();
             }
             return PartialView(products);
         }
@@ -44,28 +44,28 @@ namespace ClothBazar.Web.Controllers
             newProduct.Price = newCategoryViewModel.Price;
             //newProduct.CategoryID = newCategoryViewModel.CategoryID;
             newProduct.Category = categoriesService.GetCategory(newCategoryViewModel.CategoryID);
-            productService.SaveProduct(newProduct);
+            ProductService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            Product product = productService.GetProduct(id);
+            Product product = ProductService.Instance.GetProduct(id);
             return PartialView(product);
         }
 
         [HttpPost]
         public ActionResult Edit(Product product)
         {
-            productService.UpdateProduct(product);
+            ProductService.Instance.UpdateProduct(product);
             return RedirectToAction("ProductTable");
         }
 
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            productService.DeleteProduct(id);
+            ProductService.Instance.DeleteProduct(id);
             return RedirectToAction("ProductTable");
         }
     }
