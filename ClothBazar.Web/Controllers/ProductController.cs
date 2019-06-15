@@ -12,18 +12,20 @@ namespace ClothBazar.Web.Controllers
     public class ProductController : Controller
     {
         //ProductService productService = new ProductService();
-        CategoriesService categoriesService = new CategoriesService();
+        //CategoriesService categoriesService = new CategoriesService();
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult ProductTable(string search)
+        public ActionResult ProductTable(string search, int? pageNo)
         {
-            List<Product> products = ProductService.Instance.GetProducts();
+            pageNo = pageNo.HasValue ? pageNo : 1;
+
+            List<Product> products = ProductService.Instance.GetProducts(pageNo.Value);
             if (!string.IsNullOrEmpty(search))
             {
-                products = ProductService.Instance.GetProducts().Where(sr => sr.Name == search).ToList();
+                products = ProductService.Instance.GetProducts(pageNo.Value).Where(sr => sr.Name == search).ToList();
             }
             return PartialView(products);
         }
@@ -31,7 +33,7 @@ namespace ClothBazar.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            List<Category> categories = categoriesService.GetCategories();
+            List<Category> categories = CategoriesService.Instance.GetCategories();
             return PartialView(categories);
         }
 
@@ -43,7 +45,7 @@ namespace ClothBazar.Web.Controllers
             newProduct.Description = newCategoryViewModel.Description;
             newProduct.Price = newCategoryViewModel.Price;
             //newProduct.CategoryID = newCategoryViewModel.CategoryID;
-            newProduct.Category = categoriesService.GetCategory(newCategoryViewModel.CategoryID);
+            newProduct.Category = CategoriesService.Instance.GetCategory(newCategoryViewModel.CategoryID);
             ProductService.Instance.SaveProduct(newProduct);
             return RedirectToAction("ProductTable");
         }

@@ -32,7 +32,7 @@
     $('#saveBtn').click(function () {
         var searchValue = $('#searchTxt').val();
         $.ajax({
-            url: '/Product/Create',
+            url: '@Url.Action("Create", "Product")',// '/Product/Create',
             data: $('#createProduct').serialize(),
             type: 'post'
         }

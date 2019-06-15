@@ -22,7 +22,7 @@
     $('#updateBtn').click(function () {
         //var searchValue = $('#searchTxt').val();
         $.ajax({
-            url: '/Product/Edit',
+            url: '@Url.Action("Edit", "Product")',// '/Product/Edit',
             data: $('#editProduct').serialize(),
             type: 'post'
         }

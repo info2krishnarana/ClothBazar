@@ -29,11 +29,12 @@ namespace ClothBazar.Services
 
         #endregion
 
-        public List<Product> GetProducts()
+        public List<Product> GetProducts(int pageNo)
         {
+            int pageSize = 5;
             using (CBContext context = new CBContext())
             {
-                return context.Products.Include(cat => cat.Category).ToList();
+                return context.Products.OrderBy(p => p.Id).Skip((pageNo - 1) * pageSize).Take(pageSize).Include(cat => cat.Category).ToList();
             }
         }
 
