@@ -1,32 +1,42 @@
 ﻿@model IEnumerable<Category>
 @{
     ViewBag.Title = "Create";
+    var imageUrl = "/Content/images/sytem/placeholder-image.png";
 }
 
 <h2>Create Product</h2>
 <form method="post" id="createProduct">
-    <div class="form-group">
-        <label>Category</label>
-        <select name="CategoryID" class="form-control">
-            @foreach (Category category in Model)
-            {
-                <option value="@category.Id">@category.Name</option>
-            }
-        </select>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Category</label>
+                <select name="CategoryID" class="form-control">
+                    @foreach (Category category in Model)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input name="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input name="Description" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input name="Price" class="form-control" />
+            </div>
+            <button type="button" id="saveBtn" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <img class="img-thumbnail img-fluid" id="productImage" src="@imageUrl" />
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Name</label>
-        <input name="Name" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Description</label>
-        <input name="Description" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Price</label>
-        <input name="Price" class="form-control" />
-    </div>
-    <button type="button" id="saveBtn" class="btn btn-primary">Submit</button>
 </form>
 <script>
     $('#saveBtn').click(function () {

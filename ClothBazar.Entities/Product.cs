@@ -12,5 +12,6 @@ namespace ClothBazar.Entities
 
         //public int CategoryID { get; set; }
         public virtual Category Category { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
